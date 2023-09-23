@@ -60,11 +60,11 @@
 [grep]
   lineNumber = true
 
-{{ if eq .chezmoi.username "sbjami" }}
+{{ if eq .chezmoi.username "sbjami" -}}
 [includeIf "gitdir:projects/omat/"]
   path = .gitconfig_personal
-{{ else }}
+{{ else -}}
 [includeIf "gitdir:projects/tuni/"]
   path = .gitconfig_tuni
-{{ end }}
+{{ end -}}
 
