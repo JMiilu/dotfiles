@@ -1,0 +1,7 @@
+README.md
+{{ if eq .chezmoi.username "sbjami" }}
+.gitconfig_tuni
+{{ else }}
+.gitconfig_personal
+{{ end }}
+
