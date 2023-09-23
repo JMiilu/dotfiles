@@ -1,6 +1,7 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 
 pager = "less -R"
+umask = 0o022
 
 [data]
     email = {{ $email | quote }}
