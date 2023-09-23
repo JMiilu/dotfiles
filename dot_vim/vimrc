@@ -1,0 +1,228 @@
+" Set compatibility mode to Vim only
+set nocompatible
+
+" Make backspace behave more intuitively in insert mode
+" Allow backspace over indentation, line ends and start of the insert
+set backspace=indent,eol,start
+
+" viminfo:
+" - remember marks for last 100 files
+" - remember registers up to 1000 lines
+" - skip registers with more than 100Kb of text
+" - restore 'hlsearch' highlighting
+" - save info to '~/.vim/viminfo' instead of '~/.viminfo'
+set viminfo='100,<1000,s100,h,n~/.vim/viminfo
+
+" Source .vimrc in current working directory if it exists
+set exrc
+
+" Shorten press ENTER to continue messages
+set shortmess=atOI
+
+" No bell
+set noerrorbells
+
+" Set default register to system clipboard:
+" (https://riptutorial.com/vim/example/25769/configure-the-default-register-to-be-used-as-system-clipboard)
+" This makes it possible to copy/paste between Vim and system clipboard
+" without any special register.
+"   'yy' yanks the current line into the system clipboard
+"   'p' pastes the contents of the system clipboard into Vim
+set clipboard=unnamed
+
+" FINDING FILES: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+" ('gf', :find, :sfind, :tabfind, etc.)
+set path=.,,**
+
+" Enable wild menu (tab command autocompletion)
+set wildmenu
+set wildmode=list:longest,full
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,*.pyo
+
+" Hide inactive/unsaved buffers instead of abandoning them
+set hidden
+
+" Wrap long lines
+set wrap
+set linebreak
+set breakindent
+set showbreak=>\ 
+set cpoptions+=n
+
+" Set default file encoding to utf-8
+set encoding=utf-8
+
+" Show line numbers
+set number
+
+" Show relative line numbers for quick navigation
+set relativenumber
+
+" Editor columns
+set colorcolumn=80
+set signcolumn=yes
+
+" Highlight cursor line
+set cursorline
+
+" Scroll before cursor reaches screen top or bottom
+set scrolloff=8
+
+" Syntax hilighting
+syntax enable
+filetype plugin indent on
+
+" Colors
+set termguicolors
+set background=dark
+
+" Indentation and tabs/spaces
+set tabstop=2 softtabstop=2
+set shiftwidth=2
+set smarttab
+set expandtab
+set smartindent
+set autoindent
+
+" Backups, swap, and undo
+set noswapfile
+set nowritebackup
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+
+" TAG JUMPING: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
+
+" AUTOCOMPLETE: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+
+" The good stuff is documented in |ins-completion|
+
+" - Ctrl+x Ctrl+n for just this file
+" - Ctrl+x Ctrl+f for filenames
+" - Ctrl+x Ctrl+] for tags only
+" - Ctrl+n for anything specified by the 'complete' option
+
+" - Use Ctrl+n and Ctrl+p to go back and forth in the suggestion list
+
+" Search hilighting off
+set nohlsearch
+
+" Incremental search
+set incsearch
+
+" COLOR SCHEME
+colorscheme gruvbox8
+
+" STATUS BAR and STATUS LINE: (must be after the color scheme setting)
+" Status bar
+set laststatus=2
+" set cmdheight=2
+set showcmd
+
+" Don't show current mode (statusline is set to show this)
+set noshowmode
+
+" Set statusline to show:
+" editing mode, git branch, filename, filestatus, encoding, line ending, cursor pos, filetype
+set statusline=
+set statusline+=%2*
+set statusline+=\ 
+set statusline+=%{StatuslineMode()}
+set statusline+=%3*
+set statusline+=%{StatuslineGit()}
+set statusline+=\ 
+set statusline+=%4*
+set statusline+=%{StatuslineRelativePath()}
+set statusline+=%=
+set statusline+=%1*
+set statusline+=%m%r[%{&ff}]
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}]
+set statusline+=\ \|\ 
+set statusline+=%5*
+set statusline+=%l,%c/%L\ %p%%
+set statusline+=%1*
+set statusline+=\ \|\ 
+set statusline+=%y\ 
+highlight User1 ctermbg=black ctermfg=white guibg=black guifg=white
+highlight User2 ctermbg=lightgreen ctermfg=black guibg=lightgreen guifg=black
+highlight User3 ctermbg=black ctermfg=lightblue guibg=black guifg=lightblue
+highlight User4 ctermbg=black ctermfg=lightgreen guibg=black guifg=lightgreen
+highlight User5 ctermbg=black ctermfg=magenta guibg=black guifg=magenta
+
+function! StatuslineMode()
+  let l:mode=mode()
+  if l:mode==#"n"
+    return "-- NORMAL -- "
+  elseif l:mode==?"v"
+    return "-- VISUAL -- "
+  elseif l:mode==#"i"
+    return "-- INSERT -- "
+  elseif l:mode==#"R"
+    return "-- REPLACE -- "
+  elseif l:mode==?"s"
+    return "-- SELECT -- "
+  elseif l:mode==#"t"
+    return "-- TERMINAL -- "
+  elseif l:mode==#"c"
+    return "-- COMMAND -- "
+  elseif l:mode==#"!"
+    return "-- SHELL -- "
+  endif
+endfunction
+
+function! GitBranch()
+  let l:dir=expand('%:p:h')
+  return system("git -C " .. l:dir .. " rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0 ? '  ' .. l:branchname .. ' ':''
+endfunction
+
+function! StatuslineRelativePath()
+  let l:homedir = expand("~")
+  let l:filedir = expand("%:p:h")
+  let l:filetail = expand("%:t")
+
+  " If in a help file show only filename without path.
+  if &ft == "help"
+    return l:filetail
+  endif
+
+  " Substitute full home dir with '~' when edited file is inside home dir.
+  if l:homedir == l:filedir
+    return "~/" .. l:filetail
+  endif
+
+  " Substitute current working directory with '.' when editing a file in
+  " current working directory and current working directory is not home dir.
+  if l:filedir == getcwd()
+    return "./" .. l:filetail
+  endif
+
+  " Show path relative to current working directory when editing file in
+  " a subdirectory and current working directory is not home directory.
+  if match(l:filedir, getcwd()) != -1
+    if l:homedir != getcwd()
+      return substitute(l:filedir, getcwd() .. "/", "./", "") .. "/" .. l:filetail
+    endif
+  endif
+
+  " Outside current working directory show full path
+  " but still substitute home directory with '~'.
+  if match(l:filedir, l:homedir) != -1
+    return substitute(l:filedir, l:homedir, "~", "") .. "/" .. l:filetail
+  endif
+
+  return expand("%:p")
+endfunction
+
