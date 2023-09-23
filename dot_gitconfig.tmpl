@@ -1,0 +1,62 @@
+[user]
+  name = Janne Miilunpalo
+  email = {{ .email | quote }}
+
+[init]
+  defaultBranch = main
+
+[core]
+  editor = vim
+  excludesfile = .gitignore_global
+
+[alias]
+  root = rev-parse --show-toplevel
+  stat = status
+
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+
+[mergetool]
+  prompt = false
+
+[mergetool "vimdiff"]
+  cmd = vimdiff \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+  hideResolved = true
+
+[mergetool "code"]
+  cmd = code --wait --merge \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
+  hideResolved = true
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[difftool "vimdiff"]
+  cmd = vimdiff \"$LOCAL\" \"$REMOTE\"
+
+[color]
+  ui = auto
+
+[color "grep"]
+  match = cyan bold
+  selected = blue
+  context = normal
+  filename = magenta
+  linenumber = green
+  separator = yellow
+  function = blue
+
+[color "status"]
+  added = green
+  changed = red
+  untracked = magenta bold
+
+[color "branch"]
+  remote = yellow
+
+[grep]
+  lineNumber = true
+
