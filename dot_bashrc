@@ -1,0 +1,33 @@
+# .bashrc
+
+# If not running interactively, don't do anything
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
+# If config dir does not exist, return immediately
+[ -d "$HOME/.bash" ] || return
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# enable color support of ls
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
+# load settings
+for file in $HOME/.bash/*.sh; do
+  source $file
+done
+
+# load custom completions
+if [ -d "$HOME/.bash/completion.d" ]; then
+  for file in $HOME/.bash/completion.d/*.sh; do
+    source $file
+  done
+fi
+
+eval $(ssh-agent -s) >/dev/null
+
