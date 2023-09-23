@@ -1,5 +1,7 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 
+pager = "less -R"
+
 [data]
     email = {{ $email | quote }}
 
