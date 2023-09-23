@@ -18,14 +18,14 @@ export HISTFILESIZE=999999
 export HISTSIZE=999999
 
 # ignore often repeated (short) commands from history and also ignore common typos
-HISTIGNORE="l:l :ll:ll :lll:lll *:la:la :laa:laa *:lla:lla *:ls:ls :lls:lls *:lss:lss *:ld:ld "
+HISTIGNORE="l:l :ll:ll :lll:lll *:la:la :laa:laa *:lla:lla *:ls:ls :lls:lls *:lss:lss *:ld:ld :sl:sl :sl *"
 HISTIGNORE="$HISTIGNORE:cd:cd :cdd*:ccd:ccd *:cccd*:ccdd*:cd ..:cd..:cd .. :cd.. :cd.:cd. :cd .:cd . :cd -:cd - :cl:cl :cl *"
 HISTIGNORE="$HISTIGNORE:pwd:dir:vdir:x:exit:history:history *:hisotory*:hisstory*:hisotry*:historry*"
 HISTIGNORE="$HISTIGNORE:help:heko:heko *:help *:* --help:* --heko:hellp *:helpp *:hekko *:rr:rr "
 HISTIGNORE="$HISTIGNORE:config:config :congig*:command:command *:commmand*:cofig*:code:code :code ."
 HISTIGNORE="$HISTIGNORE:reload:reload :* --version:vim:vim :vi:vi :fc:fc :fc *:echo:echo :echo *"
 HISTIGNORE="$HISTIGNORE:gr:gr :git:git :git sta:git stat:git stas:git pu:git lo:git l:git he*:git dif"
-HISTIGNORE="$HISTIGNORE:git log"
+HISTIGNORE="$HISTIGNORE:git lol:git lof:git loh:git lg:git stah:git ss:git checkout -b *"
 export HISTIGNORE
 
 # write history to disk if last command was successful

@@ -10,7 +10,7 @@ _edit_and_rerun_last_cmd() {
   local exit_code=$?
 
   # remove previous command from history
-  [[ -n $prev_cmd ]] && history -d $prev_cmd
+  [[ -n $prev_cmd ]] && history -d -1
 
   return $exit_code
 }
