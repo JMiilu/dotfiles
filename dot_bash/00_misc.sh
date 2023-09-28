@@ -26,7 +26,7 @@ HISTIGNORE="$HISTIGNORE:config:config :congig*:command:command *:commmand*:cofig
 HISTIGNORE="$HISTIGNORE:reload:reload :* --version:vim:vim :vi:vi :fc:fc :fc *:echo:echo :echo *"
 HISTIGNORE="$HISTIGNORE:gr:gr :git:git :git sta:git stat:git stas:git pu:git lo:git l:git he*:git dif"
 HISTIGNORE="$HISTIGNORE:git lol:git lof:git loh:git lg:git stah:git ss:git checkout -b *:git add *:git commit *"
-HISTIGNORE="$HISTIGNORE:git rm *:rm *:chezmoi edit:chezmoi edit *"
+HISTIGNORE="$HISTIGNORE:git rm *:rm *:git mv *:chezmoi edit:chezmoi edit *"
 export HISTIGNORE
 
 # write history to disk if last command was successful
