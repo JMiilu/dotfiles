@@ -6,6 +6,11 @@ if [[ -n $GOPATH ]] && [[ -d "$GOPATH/bin" ]]; then
   PATH="$PATH:$GOPATH/bin"
 fi
 
+# QT_BIN_PATH
+if [[ -n $QT_BIN_PATH ]] && [[ -d "$QT_BIN_PATH" ]]; then
+  [[ :$PATH: == *":$QT_BIN_PATH:"* ]] || PATH="$QT_BIN_PATH:$PATH"
+fi
+
 # node version manager "n"
 if [[ -n $N_PREFIX ]] && [[ -d "$N_PREFIX/bin" ]]; then
   [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH="$N_PREFIX/bin:$PATH"
