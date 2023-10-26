@@ -21,13 +21,13 @@ export HISTSIZE=999999
 HISTIGNORE="l:l :ll:ll :lll:lll *:la:la :laa:laa *:lla:lla *:ls:ls :lls:lls *:lss:lss *:ld:ld :sl:sl :sl *"
 HISTIGNORE="$HISTIGNORE:cd:cd :cdd*:ccd:ccd *:cccd*:ccdd*:cd ..:cd..:cd .. :cd.. :cd.:cd. :cd .:cd . :cd -:cd - :cl:cl :cl *"
 HISTIGNORE="$HISTIGNORE:pwd:dir:vdir:x:exit:history:history *:hisotory*:hisstory*:hisotry*:historry*:historhy*"
-HISTIGNORE="$HISTIGNORE:histry:histor:help:heko:heko *:help *:* --help:* --heko:hellp *:helpp *:hekko *:rr:rr "
+HISTIGNORE="$HISTIGNORE:histry:histor:historu:help:heko:heko *:help *:* --help:* --heko:hellp *:helpp *:hekko *:rr:rr "
 HISTIGNORE="$HISTIGNORE:config:config :congig*:command:command *:commmand*:cofig*:code:code :code ."
 HISTIGNORE="$HISTIGNORE:reload:reload :* --version:vim:vim :vi:vi :fc:fc :fc *:echo:echo :echo *"
 HISTIGNORE="$HISTIGNORE:gr:gr :git:git :git sta:git stat:git stas:git pu:git lo:git l:git he*:git dif:git pus:git pus"
 HISTIGNORE="$HISTIGNORE:git lol:git lof:git loh:git lg:git stah:git ss:git checkout -b *:git add *:git commit *"
 HISTIGNORE="$HISTIGNORE:git stau:git staus:git statu:git stasu:git stasus:git reset*:git restore*"
-HISTIGNORE="$HISTIGNORE:git branch -D*:git satus:git rm *:rm *:git mv *:chezmoi edit:chezmoi edit *"
+HISTIGNORE="$HISTIGNORE:git branch -D *:git satus:git rm *:rm *:git mv *:chezmoi edit:chezmoi edit *"
 export HISTIGNORE
 
 # write history to disk if last command was successful
