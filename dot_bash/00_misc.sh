@@ -54,10 +54,8 @@ if [ -d "$HOME/go" ]; then
   export GOPATH="$HOME/go"
 fi
 
-# QT_BIN_PATH
-if [ -d "/opt/Qt/6.6.0/gcc_64/bin" ]; then
-  export QT_BIN_PATH="/opt/Qt/6.6.0/gcc_64/bin"
-fi
+# QT_LIB_VERSION
+export QT_LIB_VERSION="6.6.0"
 
 # python version manager "pyenv"
 if [ -d "$HOME/.pyenv" ]; then
