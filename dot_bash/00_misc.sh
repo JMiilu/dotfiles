@@ -28,6 +28,7 @@ HISTIGNORE="$HISTIGNORE:gr:gr :git:git :git sta:git stat:git stas:git pu:git lo:
 HISTIGNORE="$HISTIGNORE:git lol:git lof:git loh:git lg:git stah:git ss:git checkout -b *:git add *:git commit *"
 HISTIGNORE="$HISTIGNORE:git stau:git staus:git statu:git stasu:git stasus:git reset*:git restore*"
 HISTIGNORE="$HISTIGNORE:git branch -D *:git satus:git rm *:rm *:git mv *:chezmoi edit:chezmoi edit *"
+HISTIGNORE="$HISTIGNORE:git branch -d *:git pus:git pus *:git push -u *:git push --set-upstream *"
 export HISTIGNORE
 
 # write history to disk if last command was successful
