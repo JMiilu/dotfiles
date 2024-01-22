@@ -18,6 +18,13 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
+# enable bash completion in interactive shells
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+  . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+
 # If config dir does not exist, return immediately
 [ -d "$HOME/.bash" ] || return
 
@@ -25,13 +32,6 @@ fi
 for file in $HOME/.bash/*.sh; do
   source $file
 done
-
-# enable bash completion in interactive shells
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-  . /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
 
 # load custom completions
 if [ -d "$HOME/.bash/completion.d" ]; then
