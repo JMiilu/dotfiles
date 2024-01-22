@@ -6,8 +6,9 @@ case $- in
     *) return;;
 esac
 
-# If config dir does not exist, return immediately
-[ -d "$HOME/.bash" ] || return
+# Don't suspend terminal output with Ctrl-S
+bind -r '\C-s'
+stty -ixon
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -17,10 +18,20 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
+# If config dir does not exist, return immediately
+[ -d "$HOME/.bash" ] || return
+
 # load settings
 for file in $HOME/.bash/*.sh; do
   source $file
 done
+
+# enable bash completion in interactive shells
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+  . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
 
 # load custom completions
 if [ -d "$HOME/.bash/completion.d" ]; then
