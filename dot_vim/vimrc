@@ -1,5 +1,82 @@
+" ------------------------------------------
+" Setting up Vundle - the vim plugin bundler
+" https://erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
+
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle
+  let iCanHazVundle=0
+endif
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/vundle/
+
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" Add your bundles here
+Plugin 'Syntastic'                " über awesome syntax and errors highlighter
+Plugin 'lifepillar/vim-gruvbox8'  " T-H-E colorscheme
+Plugin 'tpope/vim-fugitive'       " So awesome, it should be illegal
+Plugin 'ctrlpvim/ctrlp.vim'       " Fuzzy file finder
+Plugin 'tpope/vim-repeat'         " Add repeat support to vim-surround
+Plugin 'tpope/vim-commentary'     " Comment code
+" Plugin 'vim-scripts/tComment'     " Comment code
+Plugin 'tpope/vim-surround'       " Easily surround stuff with quotes, brackets, tags, etc.
+Plugin 'jeffkreeftmeijer/vim-numbertoggle' " Toggle between absolute and relative line numbers
+" Plugin 'tpope/vim-dispatch'       " Dispatch compilation or tests to background, show errors in new window
+Plugin 'christoomey/vim-tmux-navigator'
+
+if iCanHazVundle == 0
+  echo "Installing Vundles, please ignore key map error messages"
+  echo ""
+  :PluginInstall
+endif
+
+call vundle#end()
+
+" Setting up Vundle - the vim plugin bundler end
+" ----------------------------------------------
+
+" color scheme
+colorscheme gruvbox8
+
+" Make CtrlP use ag for listing the files. Way faster and no useless files.
+let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_use_caching = 0
+
+" Disable wrapping for vim-tmux-navigator
+let g:tmux_navigator_no_wrap = 1
+
 " Set compatibility mode to Vim only
 set nocompatible
+
+" Use the space key as our leader.
+let mapleader = "\<Space>"
+
+" Don't update while executing macros
+set lazyredraw
+
+" Check if an option was set from a file in $HOME.  This lets us avoid
+" overriding options in the user's vimrc, but still override options in the
+" system vimrc.
+function! s:MaySet(option) abort
+  if exists('*execute')
+    let out = execute('verbose setglobal all ' . a:option . '?')
+  else
+    redir => out
+    silent verbose execute 'setglobal all' a:option . '?'
+    redir END
+  endif
+  return out !~# " \\(\\~[\\/][^\n]*\\|Lua\\)$"
+endfunction
 
 " Make backspace behave more intuitively in insert mode
 " Allow backspace over indentation, line ends and start of the insert
@@ -30,19 +107,61 @@ set noerrorbells
 "   'p' pastes the contents of the system clipboard into Vim
 set clipboard=unnamed
 
-" FINDING FILES: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
-
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 " ('gf', :find, :sfind, :tabfind, etc.)
 set path=.,,**
 
-" Enable wild menu (tab command autocompletion)
+" Disable completing keywords in included files (e.g., #include in C).  When
+" configured properly, this can result in the slow, recursive scanning of
+" hundreds of files of dubious relevance.
+set complete-=i
+
+" Do not consider octal number when using CTRL-A and CTRL-X for adding to and
+" subtracting from a number
+set nrformats-=octal
+
+" Make the escape key more responsive by decreasing the wait time for an
+" escape sequence (e.g., arrow keys).
+if !has('nvim') && &ttimeoutlen == -1
+  set ttimeout
+  set ttimeoutlen=100
+endif
+
+" Search hilighting off
+set nohlsearch
+
+" Incremental search
+set incsearch
+
+" Ignore case in search patterns
+set ignorecase
+
+" Ignore case smartly (only when the whole pattern is lowercase)
+set smartcase
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" Use CTRL-L to clear the highlighting of 'hlsearch' (off by default) and call
+" :diffupdate.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+" Show status bar always
+set laststatus=2
+set showcmd
+
+" Show the line and column number of the cursor position, separated by a comma.
+set ruler
+
+" Enable enhanced tab command autocompletion
 set wildmenu
 set wildmode=list:longest,full
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc,*.pyo
+set wildignore=*.o,*~,*.pyc,*.pyo,*.so
 
 " Hide inactive/unsaved buffers instead of abandoning them
 set hidden
@@ -57,6 +176,9 @@ set cpoptions+=n
 " Set default file encoding to utf-8
 set encoding=utf-8
 
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
 " Show line numbers
 set number
 
@@ -70,16 +192,65 @@ set signcolumn=yes
 " Highlight cursor line
 set cursorline
 
-" Scroll before cursor reaches screen top or bottom
-set scrolloff=8
+" Always keep some context lines visible above and below the cursor.
+set scrolloff=3
 
-" Syntax hilighting
-syntax enable
-filetype plugin indent on
+if s:MaySet('sidescroll') && s:MaySet('sidescrolloff')
+  set sidescroll=1
+  set sidescrolloff=2
+endif
 
-" Colors
-set termguicolors
-set background=dark
+set display+=lastline
+if has('patch-7.4.2109')
+  set display+=truncate
+endif
+
+" Modify how list mode shows tabs and spaces etc.
+" Makes :set list (visible whitespace) prettier.
+if s:MaySet('listchars')
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+" Delete comment character when joining commented lines.
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+" Replace the check for a tags file in the parent directory of the current
+" file with a check in every ancestor directory.
+if has('path_extra') && (',' . &g:tags . ',') =~# ',\./tags,'
+  setglobal tags-=./tags tags-=./tags; tags^=./tags;
+endif
+
+" Set to autoread when a file is changed from the outside
+" Undo by pressing 'u'
+set autoread
+
+" Max history size
+set history=1000
+
+" Maximum number of tab pages to open
+set tabpagemax=50
+
+" Persist g:UPPERCASE variables, used by some plugins, in .viminfo.
+if !empty(&viminfo)
+  set viminfo^=!
+endif
+
+" Saving options in session and view files causes more problems than it
+" solves, so disable it.
+set sessionoptions-=options
+set viewoptions-=options
+
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^Eterm'
+  set t_Co=16
+endif
+
+" Disable a legacy behavior that can break plugin maps.
+if has('langmap') && exists('+langremap') && &langremap && s:MaySet('langremap')
+  set nolangremap
+endif
 
 " Indentation and tabs/spaces
 set tabstop=2 softtabstop=2
@@ -96,37 +267,27 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
-" TAG JUMPING: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+" Syntax hilighting
+filetype plugin indent on
+syntax enable
 
-" Create the `tags` file (may need to install ctags first)
-command! MakeTags !ctags -R .
+" Colors
+set termguicolors
+set background=dark
 
-" AUTOCOMPLETE: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+" Set extra options when running in GUI mode
+if has("gui_running")
+  set guioptions-=T
+  set guioptions+=e
+  set t_Co=256
+  set guitablabel=%M\ %t
+endif
 
-" The good stuff is documented in |ins-completion|
-
-" - Ctrl+x Ctrl+n for just this file
-" - Ctrl+x Ctrl+f for filenames
-" - Ctrl+x Ctrl+] for tags only
-" - Ctrl+n for anything specified by the 'complete' option
-
-" - Use Ctrl+n and Ctrl+p to go back and forth in the suggestion list
-
-" Search hilighting off
-set nohlsearch
-
-" Incremental search
-set incsearch
-
-" COLOR SCHEME
-colorscheme gruvbox8
+" Cursor
+set guicursor=n-v-c:block-Cursor/lCursor
+set guicursor+=i:block-iCursor
 
 " STATUS BAR and STATUS LINE: (must be after the color scheme setting)
-" Status bar
-set laststatus=2
-" set cmdheight=2
-set showcmd
-
 " Don't show current mode (statusline is set to show this)
 set noshowmode
 
@@ -225,4 +386,80 @@ function! StatuslineRelativePath()
 
   return expand("%:p")
 endfunction
+
+" Move up and down by visible lines if current line is wrapped
+nmap j gj
+nmap k gk
+
+" Map Ctrl-s to write the file
+nmap <C-s> :w<cr>
+
+" Emacs-like beginning and end of line
+imap <C-a> <C-o>^
+imap <C-e> <C-o>$
+
+" Exit insert mode and save the buffer
+imap <C-s> <esc>:w<cr>
+
+" Copy the entire buffer into the system register
+nmap <leader>co ggVG*y
+
+" Edit your vimrc in a new tab
+nmap <leader>vi :tabedit $MYVIMRC<cr>
+
+" Source (reload) your vimrc
+nmap <leader>so :source $MYVIMRC<cr>
+
+" move cursor to the first non-space character of the line
+nmap <leader>0 ^
+
+" Command aliases for typoed commands (accidentally holding shift too long)
+command! Q q " Bind :Q to :q
+command! Qall qall
+command! QA qall
+command! E e
+
+" TAG JUMPING: (https://www.youtube.com/watch?v=XA2WjJbmmoM)
+
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
+" Bind `q` to close the buffer for help files
+autocmd Filetype help nnoremap <buffer> q :q<CR>
+
+if empty(mapcheck('<C-U>', 'i'))
+  inoremap <C-U> <C-G>u<C-U>
+endif
+
+if empty(mapcheck('<C-W>', 'i'))
+  inoremap <C-W> <C-G>u<C-W>
+endif
+
+" From `:help :DiffOrig`.
+if exists(":DiffOrig") != 2
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+        \ | diffthis | wincmd p | diffthis
+endif
+
+" Correctly highlight $() and other modern affordances in filetype=sh.
+if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell') && !exists('g:is_dash')
+  let g:is_posix = 1
+endif
+
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
+" Enable the :Man command shipped inside Vim's man filetype plugin.
+if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
+  runtime ftplugin/man.vim
+endif
 
