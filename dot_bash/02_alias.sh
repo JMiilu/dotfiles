@@ -89,7 +89,7 @@ which highlight &>/dev/null && alias hl='highlight -O ansi --force'
 
 # tmux sessions
 if [[ -f ~/bin/tat ]]; then
-  [[ -d ~/projects/repolainen/submission-system/ ]] && alias repolainen='cd ~/projects/repolainen/submission-system/ && tat repolainen'
+  [[ -d ~/projects/repolainen/submissionsystem_repolainen/ ]] && alias repolainen='cd ~/projects/repolainen/submissionsystem_repolainen/ && tat repolainen'
   [[ -d ~/projects/prp/prplatform/ ]] && alias prp='cd ~/projects/prp/prplatform/ && tat prp'
 fi
 
