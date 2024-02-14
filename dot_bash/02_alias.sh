@@ -38,7 +38,7 @@ alias paths='echo -e ${PATH//:/\\n}'
 
 
 # config/dotfiles
-alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 
 # enable color support of ls and also add handy aliases
@@ -86,6 +86,12 @@ alias set_perf_event_paranoid='echo 0 | sudo tee /proc/sys/kernel/perf_event_par
 
 which colordiff &>/dev/null && alias diff='colordiff'
 which highlight &>/dev/null && alias hl='highlight -O ansi --force'
+
+# tmux sessions
+if [[ -f ~/bin/tat ]]; then
+  [[ -d ~/projects/repolainen/submission-system/ ]] && alias repolainen='cd ~/projects/repolainen/submission-system/ && tat repolainen'
+  [[ -d ~/projects/prp/prplatform/ ]] && alias prp='cd ~/projects/prp/prplatform/ && tat prp'
+fi
 
 # exa: a modern replacement for ‘ls’.
 # alias ls='exa'
