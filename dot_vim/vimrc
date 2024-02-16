@@ -151,6 +151,7 @@ if !has('nvim') && &ttimeoutlen == -1
   set ttimeoutlen=100
 endif
 
+
 " Search hilighting off
 set nohlsearch
 
@@ -318,9 +319,18 @@ augroup black_on_save
   autocmd BufWritePre *.py Black
 augroup end
 
+" JavaScript, HTML, CSS
+au BufNewFile, BufRead *.js, *.jsx, *.vue, *.vuex, *.cjs, *.mjs, *.json, *.html, *.htm, *.css, *.djhtml, *.yml, *.yaml
+  \ set tabstop=2
+  \ set softtabstop=2
+  \ set shiftwidth=2
+
+au BufRead,BufNewFile *.js, *.jsx, *.vue, *.vuex, *.cjs, *.mjs, *.json, *.html, *.htm, *.css, *.djhtml, *.yml, *.yaml match BadWhitespace /\s\+$/
+
 " let g:ale_linters = {'python': ['flake8']}
 let g:ale_fixers = {}
 let g:ale_fixers.python = ['black']
+let g:ale_fixers.javascript = ['standard']
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
 
