@@ -33,6 +33,11 @@ Plugin 'tpope/vim-surround'       " Easily surround stuff with quotes, brackets,
 Plugin 'jeffkreeftmeijer/vim-numbertoggle' " Toggle between absolute and relative line numbers
 " Plugin 'tpope/vim-dispatch'       " Dispatch compilation or tests to background, show errors in new window
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'dense-analysis/ale'       " Asynchronous Lint Engine (syntax checking and semantic errors)
+Plugin 'psf/black'                " Python PEP8 coding style and formatting
+"Plugin 'nvie/flake8'
+Plugin 'tmhedberg/SimpylFold'     " Python code folding
+Plugin 'vim-scripts/indentpython.vim'
 
 if iCanHazVundle == 0
   echo "Installing Vundles, please ignore key map error messages"
@@ -270,6 +275,36 @@ set undofile
 " Syntax hilighting
 filetype plugin indent on
 syntax enable
+
+" code folding
+set foldmethod=indent
+set foldlevel=99
+let g:SimpylFold_docstring_preview = 1
+
+" python editing
+let python_highlight_all = 1
+
+au BufNewFile, BufRead *.py
+  \ set tabstop=4
+  \ set softtabstop=4
+  \ set shiftwidth=4
+  \ set textwidth=79
+  \ set expandtab
+  \ set autoindent
+  \ set fileformat=unix
+
+au BufRead,BufNewFile *.py, *.pyw, *.c, *.h, *.cc, *.hh, *.cpp, *.cxx, *.hpp, *.hxx match BadWhitespace /\s\+$/
+
+augroup black_on_save
+  autocmd!
+  autocmd BufWritePre *.py Black
+augroup end
+
+" let g:ale_linters = {'python': ['flake8']}
+let g:ale_fixers = {}
+let g:ale_fixers.python = ['black']
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
 
 " Colors
 set termguicolors
