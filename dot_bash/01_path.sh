@@ -36,6 +36,7 @@ fi
 if [[ -n $PYENV_ROOT ]] && [[ -d "$PYENV_ROOT/bin" ]]; then
   command -v pyenv >/dev/null || PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 # ~/.local/bin
