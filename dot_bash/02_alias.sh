@@ -92,6 +92,7 @@ if [[ -f ~/bin/tat ]]; then
   [[ -d ~/projects/repolainen/submissionsystem_repolainen/ ]] && alias repolainen='cd ~/projects/repolainen/submissionsystem_repolainen/ && tat repolainen'
   [[ -d ~/projects/prp/prplatform/ ]] && alias prp='cd ~/projects/prp/prplatform/ && tat prp'
   [[ -d ~/projects/front/ ]] && alias front='cd ~/projects/front/ && tat front'
+  [[ -d ~/projects/tiraka/ ]] && alias tiraka='cd ~/projects/tiraka/ && tat tiraka'
   [[ -d ~/projects/webcais/ ]] && alias webcais='cd ~/projects/webcais/ && tat webcais'
 fi
 
