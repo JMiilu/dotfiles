@@ -94,14 +94,14 @@ if [[ -f ~/bin/tat ]]; then
   COURSES_DIR="${WORK_DIR}/courses"
 
   for course in $(find ${COURSES_DIR}/ -maxdepth 1 -mindepth 1 -type d -exec basename '{}' \;); do
-    link_target="${COURSE_DIR}/${course}"
+    link_name="${WORK_DIR}/${course}"
 
-    if [[ -L ${link_target} ]] && [[ -d ${link_target} ]]; then
-      alias ${course}="cd -P ${link_target} && tat ${course}"
+    if [[ -L ${link_name} ]] && [[ -d ${link_name} ]]; then
+      alias ${course}="cd -P ${link_name} && tat ${course}"
     fi
   done
 
-  unset link_target
+  unset link_name
 
   # project course
   [[ -d ~/project ]] && alias project='cd ~/project && tat project'
