@@ -89,11 +89,28 @@ which highlight &>/dev/null && alias hl='highlight -O ansi --force'
 
 # tmux sessions
 if [[ -f ~/bin/tat ]]; then
+  # course implementations
+  WORK_DIR="${HOME}/work"
+  COURSES_DIR="${WORK_DIR}/courses"
+
+  for course in $(find ${COURSES_DIR}/ -maxdepth 1 -mindepth 1 -type d -exec basename '{}' \;); do
+    link_target="${COURSE_DIR}/${course}"
+
+    if [[ -L ${link_target} ]] && [[ -d ${link_target} ]]; then
+      alias ${course}="cd -P ${link_target} && tat ${course}"
+    fi
+  done
+
+  unset link_target
+
+  # project course
+  [[ -d ~/project ]] && alias project='cd ~/project && tat project'
+
+  # repolainen
   [[ -d ~/projects/repolainen/submissionsystem_repolainen/ ]] && alias repolainen='cd ~/projects/repolainen/submissionsystem_repolainen/ && tat repolainen'
+
+  # prp
   [[ -d ~/projects/prp/prplatform/ ]] && alias prp='cd ~/projects/prp/prplatform/ && tat prp'
-  [[ -d ~/projects/front/ ]] && alias front='cd ~/projects/front/ && tat front'
-  [[ -d ~/projects/tiraka/ ]] && alias tiraka='cd ~/projects/tiraka/ && tat tiraka'
-  [[ -d ~/projects/webcais/ ]] && alias webcais='cd ~/projects/webcais/ && tat webcais'
 fi
 
 # exa: a modern replacement for ‘ls’.

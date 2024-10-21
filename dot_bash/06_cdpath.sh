@@ -1,6 +1,8 @@
 # .bash/06_cdpath.sh
 # Build and set CDPATH variable
 
+return
+
 CDPATH=""
 
 # ~/projects/tuni
