@@ -107,10 +107,10 @@ if [[ -f ~/bin/tat ]]; then
   [[ -d ~/project ]] && alias project='cd ~/project && tat project'
 
   # repolainen
-  [[ -d ~/projects/repolainen/submissionsystem_repolainen/ ]] && alias repolainen='cd ~/projects/repolainen/submissionsystem_repolainen/ && tat repolainen'
+  [[ -d ~/work/repolainen/submissionsystem_repolainen/ ]] && alias repolainen='cd ~/work/repolainen/submissionsystem_repolainen/ && tat repolainen'
 
   # prp
-  [[ -d ~/projects/prp/prplatform/ ]] && alias prp='cd ~/projects/prp/prplatform/ && tat prp'
+  [[ -d ~/work/prp/prplatform/ ]] && alias prp='cd ~/work/prp/prplatform/ && tat prp'
 fi
 
 # exa: a modern replacement for ‘ls’.
