@@ -121,7 +121,15 @@ fi
 # alias tree='exa --tree'
 
 # bat: a cat clone with wings.
-# alias cat='batcat'
+# alias cat='bat'
+
+# man pages with colors (using bat)
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+# less with source highlighting (using bat)
+export LESS='-R'
+export LESSOPEN="| bat --paging=never --color=always %s"
 
 # ripgrep: a faster grep that respects .gitignore
 # alias grep="rg"

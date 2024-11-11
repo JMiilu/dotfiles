@@ -4,46 +4,46 @@
 
 # source highlighting and line numbers for less
 
-lesscolors() {
-  env LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s' \
-    LESS=' --RAW-CONTROL-CHARS -N ' \
-      $(which less) $@
-}
+# lesscolors() {
+#   env LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh --css darkblue_sh.css --no-doc %s' \
+#     LESS=' --RAW-CONTROL-CHARS -N ' \
+#       $(which less) $@
+# }
 
-less() {
-  less=$(which less)
-  has_file=false
-  all_text=true
+# less() {
+#   less=$(which less)
+#   has_file=false
+#   all_text=true
 
-  for arg in $@; do
-    if [[ "$arg" != -* ]] && [ -e "$arg" ]; then
-      has_file=true
-      enc=$(file -b --mime-encoding "$(realpath $arg)")
+#   for arg in $@; do
+#     if [[ "$arg" != -* ]] && [ -e "$arg" ]; then
+#       has_file=true
+#       enc=$(file -b --mime-encoding "$(realpath $arg)")
 
-      if [[ "$enc" != *"-ascii" ]] && [ "$enc" != "utf-8" ]; then
-        all_text=false
-        break
-      fi
-    fi
-  done
+#       if [[ "$enc" != *"-ascii" ]] && [ "$enc" != "utf-8" ]; then
+#         all_text=false
+#         break
+#       fi
+#     fi
+#   done
 
-  if [ $has_file == true ] && [ "$all_text" == true ]; then
-    less=lesscolors
-  fi
+#   if [ $has_file == true ] && [ "$all_text" == true ]; then
+#     less=lesscolors
+#   fi
 
-  $less $@
-}
+#   $less $@
+# }
 
-# colors for man pages
-man() {
-  LESS_TERMCAP_md=$'\e[01;31m' \
-  LESS_TERMCAP_me=$'\e[0m' \
-  LESS_TERMCAP_us=$'\e[01;32m' \
-  LESS_TERMCAP_ue=$'\e[0m' \
-  LESS_TERMCAP_so=$'\e[45;93m' \
-  LESS_TERMCAP_se=$'\e[0m' \
-  command man "$@"
-}
+# # colors for man pages
+# man() {
+#   LESS_TERMCAP_md=$'\e[01;31m' \
+#   LESS_TERMCAP_me=$'\e[0m' \
+#   LESS_TERMCAP_us=$'\e[01;32m' \
+#   LESS_TERMCAP_ue=$'\e[0m' \
+#   LESS_TERMCAP_so=$'\e[45;93m' \
+#   LESS_TERMCAP_se=$'\e[0m' \
+#   command man "$@"
+# }
 
 # create a new python virtual environment in the current directory
 venv() {
