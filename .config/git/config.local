@@ -1,0 +1,5 @@
+[user]
+	name = "Janne Miilunpalo"
+	email = "janne.miilunpalo@gmail.com"
+  signingkey = ~/.ssh/id_GitHub.pub
+

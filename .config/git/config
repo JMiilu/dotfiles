@@ -1,0 +1,145 @@
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	excludesfile = ignore
+	; pager = delta
+
+[rerere]
+	enabled = true
+  autoupdate = true
+
+[alias]
+	last = log -1 HEAD
+	root = rev-parse --show-toplevel
+	stat = status
+	st = status
+	lg-detail = log --graph --decorate --pretty=format:'%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(auto)%d%C(reset)%n%C(white)%B%C(reset)' --date=short
+	bl = blame -w -C -C -C
+	wd = diff --word-diff
+	lol = log --oneline --decorate
+	graph = log --oneline --graph --decorate
+
+; [mergetool]
+; 	prompt = false
+
+; [mergetool "vimdiff"]
+; 	cmd = vimdiff \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+; 	hideResolved = true
+
+; [mergetool "code"]
+; 	cmd = code --wait --merge \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
+; 	hideResolved = true
+
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+	; tool = vimdiff
+
+; [difftool]
+; 	prompt = false
+
+; [difftool "vimdiff"]
+; 	cmd = vimdiff \"$LOCAL\" \"$REMOTE\"
+
+[column]
+	ui = auto
+
+[push]
+	autoSetupRemote = true
+	default = current
+	followTags = true
+
+[pull]
+	default = current
+	rebase = true
+
+[rebase]
+	updateRefs = true
+	autoStash = true
+	missingCommitsCheck = warn
+
+[status]
+	renames = copies
+
+[commit]
+  verbose = true
+  gpgSign = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	; sort = -taggerdate
+  sort = -version:refname
+  gpgSign = true
+
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+
+[color "grep"]
+	match = cyan bold
+	selected = blue
+	context = normal
+	filename = magenta
+	linenumber = green
+	separator = yellow
+	function = blue
+
+[color "status"]
+	added = green
+	changed = red
+	untracked = magenta bold
+
+[color "branch"]
+	remote = yellow
+
+[grep]
+	lineNumber = true
+	extendedRegexp = true
+
+; [merge]
+; 	; tool = vimdiff
+; 	conflictStyle = diff3
+
+; [interactive]
+; 	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	hyperlinks = true
+	syntax-theme = Dracula
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[include]
+	path = config.local
+
+[includeIf "gitdir:~/Tuni/"]
+	path = config.tuni
+
+; [credential "https://github.com"]
+; 	helper = 
+; 	helper = !/usr/bin/gh auth git-credential
+
+; [credential "https://gist.github.com"]
+; 	helper = 
+; 	helper = !/usr/bin/gh auth git-credential
+
+[url "git@github.com:JMiilu/"]
+  insteadOf = "jm:"
+
+[url "git@course-gitlab.tuni.fi:"]
+  insteadOf = "tuni:"
+

@@ -1,0 +1,26 @@
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
+# Exlude minimized files, .git directory etc.
+--glob=!*.min.{css,js}
+--glob=!**/.git/**/*
+--glob=!**/.cache/**/*
+--glob=!**/.dropbox/**/*
+--glob=!**/.gradle/**/*
+--glob=!**/.venv/**/*
+--glob=!**/node_modules/**/*
+--glob=!**/.gitattributes
+--glob=!**/.gitmodules
+--glob=!**/__pycache__/**/*
+--glob=!**/build/**/*
+--glob=!**/_build/**/*
+--glob=!**/dist/**/*
+--glob=!**/Filen/**/*
+
+# Because who cares about case!?
+--smart-case
+

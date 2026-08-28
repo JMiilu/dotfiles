@@ -1,0 +1,75 @@
+# Compiled source and libraries etc. #
+######################################
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.py[co]
+*.min.js
+*.min.css
+
+__pycache__/
+node_modules/
+elm-stuff/
+build/
+dist/
+.gradle/
+.venv/
+.cache/
+_build/
+
+# Editing tools and IDEs #
+##########################
+[._]*.sw[a-p]
+[._]*.s[a-v][a-z]
+*~
+~*
+\#*\#
+\.#*
+.ipynb_checkpoints/
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+*.sqlite3
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+/Library/Fonts/Apple\ Color\ Emoji.ttc
+.LSOverride
+.TemporaryItems
+.VolumeIcon.icns
+.DocumentRevisions-V100
+.AppleDb
+.AppleDesktop
+Network\ Trash\ Folder
+Temporary\ Items
+.apdisk
+
+# Miscellaneous other files #
+#############################
+.local*
+.secret*
+.envrc
+*.prev
+*.ba[ck]
+*.backup
+*.bkp
+*.old
+*.orig
+
+.git/
+.dropbox/
+Filen/
+

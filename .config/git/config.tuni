@@ -1,0 +1,5 @@
+[user]
+	name = "Janne Miilunpalo"
+	email = "janne.miilunpalo@tuni.fi"
+  signingkey = ~/.ssh/id_Course_GitLab.pub
+
